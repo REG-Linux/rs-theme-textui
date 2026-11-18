@@ -74,7 +74,10 @@
                          "left": "{item.col * screen.w * 0.94 / max(1, dialog.keyCols)}", "top": "{item.row * screen.h * 0.09}",
                          "width": "{item.colSpan * screen.w * 0.94 / max(1, dialog.keyCols)}", "height": "{item.rowSpan * screen.h * 0.09}" },
               "children": [
-                { "use": "pill", "style": { "width": "100%", "height": "100%", "padding": 0, "justifyContent": "center", "borderRadius": "1.5vmin" },
+                { "type": "box", "id": "keyCell",
+                  "style": { "width": "100%", "height": "100%", "justifyContent": "center", "alignItems": "center",
+                             "background": "$color.hint", "borderRadius": "1.5vmin" },
+                  "states": { "selected": { "style": { "background": "$color.pill" } } },
                   "children": [ { "use": "label", "text": "{item.label}", "fontMenu": true, "fontSize": "$small.size", "align": "center" } ] }
               ] } },
           { "type": "image", "id": "busy", "src": ":/busy_0.svg", "fit": "contain", "tint": "$color.text",
