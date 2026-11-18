@@ -1,0 +1,17 @@
+// A system's games: the list left, the selected game's art right.
+{
+  "views": {
+    "gamelist/basic": { "id": "basic", "style": { "width": "100%", "height": "100%" }, "children": [
+      { "use": "bg" },
+      { "use": "title", "text": "{upper(system.fullName)}" },
+      { "type": "image", "id": "art", "src": "{firstFile(game.thumbnail, game.image)}", "fit": "contain", "position": ["100%", "50%"],
+        "style": { "position": "absolute", "right": "$edge", "top": "$row.h", "width": "40vw", "height": "75vh" } },
+      { "type": "repeat", "id": "games", "source": "games", "cursor": { "scroll": "row" },
+        "style": { "position": "absolute", "left": "$edge", "top": "$row.h", "width": "{screen.w * (firstFile(game.thumbnail, game.image) != \"\" ? 0.52 : 0.94)}", "height": "75vh",
+                   "flexDirection": "column", "overflow": "hidden" },
+        "template": { "use": "row", "children": [
+          { "use": "pill", "children": [ { "use": "label", "text": "{item.name}" } ] } ] } },
+      { "use": "help" }
+    ] }
+  }
+}

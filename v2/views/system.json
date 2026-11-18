@@ -1,0 +1,15 @@
+// The systems: one line each.
+{
+  "views": {
+    "system": { "id": "system", "style": { "width": "100%", "height": "100%" }, "children": [
+      { "use": "bg" },
+      { "use": "title", "text": "SYSTEMS" },
+      { "type": "repeat", "id": "systems", "source": "systems", "cursor": { "scroll": "row" },
+        "style": { "position": "absolute", "left": "$edge", "top": "$row.h", "width": "94vw", "height": "75vh",
+                   "flexDirection": "column", "overflow": "hidden" },
+        "template": { "use": "row", "children": [
+          { "use": "pill", "children": [ { "use": "label", "text": "{item.fullName}" } ] } ] } },
+      { "use": "help" }
+    ] }
+  }
+}

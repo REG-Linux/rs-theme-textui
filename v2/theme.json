@@ -1,0 +1,7 @@
+// TextUI: a text-first theme for small screens (320x240 .. 640x480).
+// Native v2: written by hand, no ES source. Format: REG-Station docs/arch/THEME-V2-FORMAT.md.
+{
+  "format": "reg-theme/2",
+  "name": "TextUI",
+  "include": ["vars.json", "components.json", "views/system.json", "views/gamelist/basic.json", "views/menu.json", "views/dialog.json", "views/screen.json"]
+}

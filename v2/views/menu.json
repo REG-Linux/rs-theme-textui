@@ -1,0 +1,44 @@
+// Every menu (settings, options, the main menu): one list, full screen. A row: its label in the
+// pill, its value at the right (an option between < >, a switch ON / OFF, a submenu an arrow).
+{
+  "views": {
+    "menu": { "id": "menu", "style": { "width": "100%", "height": "100%" }, "children": [
+      { "use": "bg" },
+      { "use": "title", "text": "{upper(menu.title)}" },
+      { "type": "repeat", "id": "rows", "source": "menu", "cursor": { "scroll": "row" },
+        "style": { "position": "absolute", "left": "$edge", "top": "$row.h", "width": "94vw",
+                   "height": "{screen.h * (menu.buttons > 0 ? 0.625 : 0.75)}",
+                   "flexDirection": "column", "overflow": "hidden" },
+        "template": { "type": "box", "id": "row",
+          "style": { "width": "100%", "height": "{screen.h * (item.kind == \"group\" ? 0.09 : 0.125)}", "flexShrink": 0,
+                     "flexDirection": "row", "alignItems": "center" },
+          "children": [
+            { "type": "text", "id": "group", "text": "{upper(item.label)}", "font": "$font.main", "fontMenu": true, "fontSize": "$small.size",
+              "valign": "bottom", "ellipsis": true,
+              "style": { "height": "100%", "flexGrow": 1, "flexShrink": 1, "minWidth": 0, "padding": [0, "3vw", 0, "3vw"], "color": "$color.dim",
+                         "display": "{item.kind == \"group\" ? \"flex\" : \"none\"}" } },
+            { "use": "pill",
+              "style": { "flexGrow": 1, "display": "{item.kind == \"group\" ? \"none\" : \"flex\"}" },
+              "children": [
+                { "use": "label", "text": "{item.label}", "fontMenu": true,
+                  "style": { "flexGrow": 1, "flexBasis": 0 } },
+                { "type": "text", "id": "value", "font": "$font.main", "fontMenu": true, "fontSize": "$text.size", "ellipsis": true,
+                  "text": "{item.kind == \"switch\" ? upper(item.value) : (item.kind == \"option\" || item.kind == \"multiselect\") ? \"< \" + item.value + \" >\" : item.value}",
+                  "style": { "flexShrink": 1, "minWidth": 0, "maxWidth": "50vw", "margin": [0, 0, 0, "2vw"], "color": "$color.dim",
+                             "display": "{item.kind == \"submenu\" || item.value == \"\" ? \"none\" : \"flex\"}" },
+                  "states": { "selected": { "style": { "color": "$color.pillText" } } } },
+                { "type": "image", "id": "arrow", "src": "{item.trailIcon != \"\" ? item.trailIcon : \":/arrow.svg\"}", "fit": "contain", "tint": "$color.dim",
+                  "style": { "height": "$small.size", "margin": [0, 0, 0, "2vw"], "flexShrink": 0,
+                             "display": "{item.kind == \"submenu\" ? \"flex\" : \"none\"}" },
+                  "states": { "selected": { "style": { "tint": "$color.pillText" } } } }
+              ] }
+          ] } },
+      { "type": "repeat", "id": "buttons", "source": "menuButtons",
+        "style": { "position": "absolute", "left": "$edge", "bottom": "$row.h", "width": "94vw", "height": "$row.h",
+                   "flexDirection": "row", "justifyContent": "center", "alignItems": "center" },
+        "template": { "use": "pill", "id": "button", "style": { "margin": [0, "1.5vw", 0, "1.5vw"] },
+          "children": [ { "use": "label", "text": "{upper(item.label)}", "fontMenu": true } ] } },
+      { "use": "help", "source": "menuHelp" }
+    ] }
+  }
+}

@@ -1,0 +1,9 @@
+// What the frontend reads of a theme besides drawing it (docs/arch/THEME-V2-FORMAT.md, facts.json):
+// its views, and no transition between them (a list theme moves at once).
+{
+  "facts": {
+    "theme|version": "7",
+    "theme|defaultTransition": "instant",
+    "theme|views": "system\nscreen\nbasic\nmenu"
+  }
+}

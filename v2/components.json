@@ -1,0 +1,61 @@
+// Shared nodes: the frame every view has (background, header, help bar) and the list row.
+{
+  "defs": {
+    "bg": { "type": "box", "id": "bg",
+            "style": { "position": "absolute", "left": 0, "top": 0, "width": "100%", "height": "100%", "background": "$color.bg" } },
+
+    // the view's title, top left (the view sets its text)
+    "title": { "type": "text", "id": "title", "text": "", "font": "$font.main", "fontSize": "$small.size", "ellipsis": true,
+      "valign": "center",
+      "style": { "position": "absolute", "left": "$edge", "top": 0, "height": "$row.h", "width": "58vw", "color": "$color.dim" } },
+
+    // the input prompts, bottom right: a button in a small pill, its label
+    "help": { "type": "repeat", "id": "help", "source": "help", "fitItems": true,
+      "style": { "position": "absolute", "right": "$edge", "bottom": 0, "height": "$row.h", "maxWidth": "{screen.w * 0.94}",
+                 "flexDirection": "row", "alignItems": "center" },
+      "template": { "type": "box", "id": "hint",
+        "style": { "flexDirection": "row", "alignItems": "center", "margin": [0, 0, 0, "2.5vw"] },
+        "children": [
+          { "type": "image", "id": "key", "src": "{item.icon}", "fit": "contain", "tint": "$color.dim",
+            "style": { "height": "$small.size" } },
+          { "type": "text", "id": "label", "text": "{upper(item.label)}", "font": "$font.main", "fontSize": "$small.size",
+            "style": { "color": "$color.dim", "margin": [0, 0, 0, "1.2vw"] } }
+        ] } },
+
+    // a dialog's buttons, a pill each (the focused one filled)
+    "dialogButtons": { "type": "repeat", "id": "buttons", "source": "dialogButtons",
+      "style": { "flexDirection": "row", "justifyContent": "center", "alignItems": "center", "alignSelf": "center", "height": "$row.h", "flexShrink": 0,
+                 "margin": ["2vh", 0, 0, 0], "display": "{dialog.buttons > 0 ? \"flex\" : \"none\"}" },
+      "template": { "use": "pill", "id": "button", "style": { "margin": [0, "1.5vw", 0, "1.5vw"] },
+        "children": [ { "use": "label", "text": "{upper(item.label)}", "fontMenu": true } ] } },
+
+    // a running task (scraping, an update): its title, text and progress
+    "task": { "type": "box", "id": "task",
+      "style": { "width": "60vw", "padding": ["1vh", "3vw", "1.5vh", "3vw"], "background": "$color.panel", "borderRadius": "3vmin", "opacity": "{item.opacity}",
+                 "flexDirection": "column" },
+      "children": [
+        { "type": "text", "id": "taskTitle", "text": "{upper(item.title)}", "font": "$font.main", "fontMenu": true, "fontSize": "$small.size", "ellipsis": true,
+          "style": { "color": "$color.dim" } },
+        { "type": "text", "id": "taskText", "text": "{item.text}", "font": "$font.main", "fontMenu": true, "fontSize": "$small.size", "ellipsis": true,
+          "style": { "color": "$color.text", "display": "{item.text != \"\" ? \"flex\" : \"none\"}" } },
+        { "type": "box", "id": "taskProgress",
+          "style": { "height": "1.2vh", "margin": ["1vh", 0, 0, 0], "background": "$color.hint", "borderRadius": "50%", "overflow": "hidden",
+                     "display": "{item.progress >= 0 ? \"flex\" : \"none\"}" },
+          "children": [ { "type": "box", "id": "taskFill", "style": { "width": "{item.progress * screen.w * 0.54}", "height": "100%", "background": "$color.text" } } ] }
+      ] },
+
+    // a screensaver picture / video: the whole viewport
+    "ssImage": { "type": "image", "id": "ssImage",
+      "style": { "position": "absolute", "left": 0, "top": 0, "width": "100%", "height": "100%" } },
+
+    // a list row: the pill (selected: filled) around its text (the view sets the text)
+    "row": { "type": "box", "id": "row",
+      "style": { "width": "100%", "height": "$row.h", "flexDirection": "row", "alignItems": "center" } },
+    "pill": { "type": "box", "id": "pill",
+      "style": { "height": "84%", "maxWidth": "100%", "minWidth": 0, "flexDirection": "row", "alignItems": "center", "padding": [0, "3vw", 0, "3vw"], "borderRadius": "50%" },
+      "states": { "selected": { "style": { "background": "$color.pill" } } } },
+    "label": { "type": "text", "id": "label", "text": "", "font": "$font.main", "fontSize": "$text.size", "ellipsis": true,
+      "style": { "color": "$color.text", "flexShrink": 1, "minWidth": 0 },
+      "states": { "selected": { "style": { "color": "$color.pillText" } } } }
+  }
+}

@@ -1,0 +1,86 @@
+// Over every view and menu: the status (clock, battery), what pops up (notifications, the
+// volume / brightness level, running tasks) and the screensaver.
+{
+  "views": {
+    "screen": { "id": "screen", "style": { "width": "100%", "height": "100%" }, "children": [
+      { "type": "box", "id": "status",
+        "style": { "position": "absolute", "right": "$edge", "top": 0, "height": "$row.h", "flexDirection": "row", "alignItems": "center",
+                   "display": "{screen.statusBar ? \"flex\" : \"none\"}" },
+        "children": [
+          { "type": "text", "id": "wifi", "text": "{network.planemode ? \"PLANE\" : \"WIFI\"}", "font": "$font.main", "fontSize": "$small.size",
+            "style": { "color": "$color.dim", "margin": [0, "2vw", 0, 0],
+                       "display": "{settings.ShowNetworkIndicator && (network.connected || network.planemode) ? \"flex\" : \"none\"}" } },
+          { "type": "text", "id": "clock", "text": "{clock.time}", "font": "$font.main", "fontSize": "$small.size",
+            "style": { "color": "$color.dim", "display": "{settings.DrawClock && clock.time != \"\" ? \"flex\" : \"none\"}" } },
+          { "type": "text", "id": "battery", "text": "{(battery.charging ? \"+\" : \"\") + battery.level + \"%\"}", "font": "$font.main", "fontSize": "$small.size",
+            "style": { "color": "{battery.level <= 15 && !battery.charging ? \"#ff5050\" : \"$(color.dim)\"}", "margin": [0, 0, 0, "2vw"],
+                       "display": "{battery.has && settings.ShowBattery != \"\" ? \"flex\" : \"none\"}" } }
+        ] },
+
+      { "type": "repeat", "id": "notifications", "source": "notifications", "pinned": true,
+        "style": { "position": "absolute", "left": "50%", "top": "$row.h", "translate": ["-50%", 0], "flexDirection": "column", "alignItems": "center",
+                   "rowGap": "1vh", "zIndex": 1000 },
+        "template": { "type": "box", "id": "notification",
+          "style": { "padding": ["1.5vh", "4vw", "1.5vh", "4vw"], "maxWidth": "88vw", "background": "$color.pill", "borderRadius": "3vmin", "opacity": "{item.opacity}" },
+          "children": [
+            { "type": "text", "id": "notificationText", "text": "{item.text}", "font": "$font.main", "fontMenu": true, "fontSize": "$small.size",
+              "align": "center", "wrap": true, "style": { "color": "$color.pillText" } } ] } },
+
+      { "type": "repeat", "id": "levels", "source": "levels", "pinned": true,
+        "style": { "position": "absolute", "left": "50%", "top": "$row.h", "translate": ["-50%", 0], "flexDirection": "column", "rowGap": "1vh", "zIndex": 1000 },
+        "template": { "type": "box", "id": "level",
+          "style": { "width": "70vw", "height": "$row.h", "flexDirection": "row", "alignItems": "center", "padding": [0, "3vw", 0, "3vw"],
+                     "background": "$color.panel", "borderRadius": "50%", "opacity": "{item.opacity}" },
+          "children": [
+            { "type": "image", "id": "levelIcon", "fit": "contain", "tint": "$color.text",
+              "src": "{item.kind == \"brightness\" ? \":/level_brightness.svg\" : item.value == 0 ? \":/level_volume_mute.svg\" : \":/level_volume.svg\"}",
+              "style": { "height": "$small.size", "flexShrink": 0 } },
+            { "type": "box", "id": "levelTrack",
+              "style": { "flexGrow": 1, "height": "1.6vh", "margin": [0, "3vw", 0, "3vw"], "background": "$color.hint", "borderRadius": "50%", "overflow": "hidden" },
+              "children": [
+                { "type": "box", "id": "levelFill", "style": { "width": "{item.value * screen.w * 0.4}", "height": "100%", "background": "$color.text" } } ] },
+            { "type": "text", "id": "levelLabel", "text": "{item.label}", "font": "$font.main", "fontSize": "$small.size",
+              "style": { "color": "$color.text", "flexShrink": 0 } }
+          ] } },
+
+      { "type": "repeat", "id": "tasks", "source": "tasks", "pinned": true,
+        "style": { "position": "absolute", "left": "$edge", "bottom": "$row.h", "flexDirection": "column", "rowGap": "1vh", "zIndex": 900 },
+        "template": { "use": "task" } },
+      { "type": "repeat", "id": "centerTasks", "source": "centerTasks", "pinned": true,
+        "style": { "position": "absolute", "left": "50%", "top": "50%", "translate": ["-50%", "-50%"], "flexDirection": "column", "zIndex": 900 },
+        "template": { "use": "task" } },
+
+      { "type": "box", "id": "screensaver", "pinned": true,
+        "style": { "position": "absolute", "left": 0, "top": 0, "width": "100%", "height": "100%", "zIndex": 2000,
+                   "display": "{screensaver.active ? \"flex\" : \"none\"}" },
+        "children": [
+          { "type": "box", "id": "screensaverBlack",
+            "style": { "position": "absolute", "left": 0, "top": 0, "width": "100%", "height": "100%", "background": "#000000", "opacity": "{screensaver.background}" } },
+          { "type": "box", "id": "screensaverViewport",
+            "style": { "position": "absolute", "left": "{screensaver.x}", "top": "{screensaver.y}", "width": "{screensaver.w}", "height": "{screensaver.h}", "overflow": "hidden" },
+            "children": [
+              { "use": "ssImage", "id": "screensaverPrevious", "src": "{screensaver.previousImage}", "fit": "contain",
+                "style": { "opacity": "{screensaver.previousOpacity}", "display": "{screensaver.previousImage != \"\" && !screensaver.stretch ? \"flex\" : \"none\"}" } },
+              { "use": "ssImage", "id": "screensaverPreviousCover", "src": "{screensaver.previousImage}", "fit": "cover",
+                "style": { "opacity": "{screensaver.previousOpacity}", "display": "{screensaver.previousImage != \"\" && screensaver.stretch ? \"flex\" : \"none\"}" } },
+              { "use": "ssImage", "id": "screensaverImage", "src": "{screensaver.image}", "fit": "contain",
+                "style": { "opacity": "{screensaver.imageOpacity}", "display": "{screensaver.image != \"\" && !screensaver.stretch ? \"flex\" : \"none\"}" } },
+              { "use": "ssImage", "id": "screensaverImageCover", "src": "{screensaver.image}", "fit": "cover",
+                "style": { "opacity": "{screensaver.imageOpacity}", "display": "{screensaver.image != \"\" && screensaver.stretch ? \"flex\" : \"none\"}" } },
+              { "use": "ssImage", "type": "video", "id": "screensaverVideo", "src": "gui:screensaver", "fit": "contain",
+                "style": { "opacity": "{screensaver.videoOpacity}", "display": "{screensaver.video && !screensaver.stretch ? \"flex\" : \"none\"}" } },
+              { "use": "ssImage", "type": "video", "id": "screensaverVideoCover", "src": "gui:screensaver", "fit": "cover",
+                "style": { "opacity": "{screensaver.videoOpacity}", "display": "{screensaver.video && screensaver.stretch ? \"flex\" : \"none\"}" } }
+            ] },
+          { "type": "text", "id": "screensaverGame", "text": "{screensaver.gameName}", "font": "$font.main", "fontMenu": true, "fontSize": "{screensaver.fontSize}",
+            "align": "center", "valign": "center", "ellipsis": true,
+            "style": { "position": "absolute", "left": "{screensaver.gameX}", "top": "{screensaver.gameY}", "width": "{screensaver.gameW}", "height": "{screensaver.gameH}",
+                       "color": "#ffffff", "opacity": "{screensaver.infoOpacity}", "display": "{screensaver.gameName != \"\" ? \"flex\" : \"none\"}" } },
+          { "type": "text", "id": "screensaverSystem", "text": "{screensaver.systemName}", "font": "$font.main", "fontMenu": true, "fontSize": "{0.66 * screensaver.fontSize}",
+            "align": "center", "valign": "center",
+            "style": { "position": "absolute", "left": "{screensaver.gameX}", "top": "{screensaver.systemY}", "width": "{screensaver.gameW}", "height": "{screensaver.systemH}",
+                       "color": "#c0c0c0", "opacity": "{screensaver.infoOpacity}", "display": "{screensaver.systemName != \"\" && screensaver.showSystem ? \"flex\" : \"none\"}" } }
+        ] }
+    ] }
+  }
+}
