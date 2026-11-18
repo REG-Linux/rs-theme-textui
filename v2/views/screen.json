@@ -17,6 +17,14 @@
                        "display": "{battery.has && settings.ShowBattery != \"\" ? \"flex\" : \"none\"}" } }
         ] },
 
+      { "type": "box", "id": "frame", "style": { "position": "absolute", "left": 0, "top": 0, "width": "100%", "height": "100%", "display": "$frame.show" },
+        "children": [
+          { "type": "image", "id": "frameTop", "src": "art/bar_h.jpg", "fit": "fill", "style": { "position": "absolute", "left": 0, "top": 0, "width": "100%", "height": "$frame.w" } },
+          { "type": "image", "id": "frameBottom", "src": "art/bar_h.jpg", "fit": "fill", "style": { "position": "absolute", "left": 0, "bottom": 0, "width": "100%", "height": "$frame.w" } },
+          { "type": "image", "id": "frameLeft", "src": "art/bar_v.jpg", "fit": "fill", "style": { "position": "absolute", "left": 0, "top": 0, "width": "$frame.w", "height": "100%" } },
+          { "type": "image", "id": "frameRight", "src": "art/bar_v.jpg", "fit": "fill", "style": { "position": "absolute", "right": 0, "top": 0, "width": "$frame.w", "height": "100%" } }
+        ] },
+
       { "type": "repeat", "id": "notifications", "source": "notifications", "pinned": true,
         "style": { "position": "absolute", "left": "50%", "top": "$row.h", "translate": ["-50%", 0], "flexDirection": "column", "alignItems": "center",
                    "rowGap": "1vh", "zIndex": 1000 },

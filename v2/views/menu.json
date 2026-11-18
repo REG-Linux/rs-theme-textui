@@ -19,7 +19,7 @@
                          "display": "{item.kind == \"group\" ? \"flex\" : \"none\"}" } },
             { "use": "pill",
               "style": { "flexGrow": 1, "display": "{item.kind == \"group\" ? \"none\" : \"flex\"}" },
-              "children": [
+              "children": [ { "use": "shine" },
                 { "use": "label", "text": "{item.label}", "fontMenu": true,
                   "style": { "flexGrow": 1, "flexBasis": 0 } },
                 { "type": "text", "id": "value", "font": "$font.main", "fontMenu": true, "fontSize": "$text.size", "ellipsis": true,
@@ -37,7 +37,7 @@
         "style": { "position": "absolute", "left": "$edge", "bottom": "$row.h", "width": "94vw", "height": "$row.h",
                    "flexDirection": "row", "justifyContent": "center", "alignItems": "center" },
         "template": { "use": "pill", "id": "button", "style": { "margin": [0, "1.5vw", 0, "1.5vw"] },
-          "children": [ { "use": "label", "text": "{upper(item.label)}", "fontMenu": true } ] } },
+          "children": [ { "use": "shine" }, { "use": "label", "text": "{upper(item.label)}", "fontMenu": true } ] } },
       { "use": "help", "source": "menuHelp" }
     ] }
   }

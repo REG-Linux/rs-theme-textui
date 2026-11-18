@@ -24,6 +24,7 @@
                    "flexDirection": "column", "padding": [0, "$edge", "$row.h", "$edge"],
                    "display": "{dialog.kind == \"panel\" ? \"flex\" : \"none\"}" },
         "children": [
+          { "use": "bg" },
           { "type": "text", "id": "panelTitle", "text": "{upper(dialog.title)}", "font": "$font.main", "fontMenu": true, "fontSize": "$small.size",
             "valign": "center", "ellipsis": true, "style": { "height": "$row.h", "flexShrink": 0, "color": "$color.dim" } },
           { "type": "box", "id": "above", "style": { "flexGrow": "{dialog.tiles > 0 || dialog.keys > 0 || dialog.hasField ? 0 : 1}" } },

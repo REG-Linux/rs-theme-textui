@@ -8,7 +8,7 @@
         "style": { "position": "absolute", "left": "$edge", "top": "$row.h", "width": "94vw", "height": "75vh",
                    "flexDirection": "column", "overflow": "hidden" },
         "template": { "use": "row", "children": [
-          { "use": "pill", "children": [ { "use": "label", "text": "{item.fullName}" } ] } ] } },
+          { "use": "pill", "children": [ { "use": "shine" }, { "use": "label", "text": "{item.fullName}" } ] } ] } },
       { "use": "help" }
     ] }
   }

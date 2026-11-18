@@ -3,5 +3,9 @@
 {
   "format": "reg-theme/2",
   "name": "TextUI",
+  "options": {
+    "finish": { "label": "Finish", "values": ["flat", "frame", "metal"], "default": "flat" },
+    "accent": { "label": "Text colour", "values": ["white", "black", "red", "yellow", "green", "cyan", "magenta"], "default": "white" }
+  },
   "include": ["vars.json", "components.json", "views/system.json", "views/gamelist/basic.json", "views/menu.json", "views/dialog.json", "views/screen.json"]
 }

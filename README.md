@@ -18,8 +18,13 @@ Install: copy this directory to `/userdata/themes/TextUI` and pick TextUI as the
 | `v2/views/menu.json` | every menu |
 | `v2/views/dialog.json` | questions, the keyboard, text viewers, busy / progress, the media viewer |
 | `v2/views/screen.json` | over everything: status, notifications, volume, tasks, screensaver |
+| `v2/art/` | the metal finish's textures (`tools/gen_textures.py` draws them from noise) |
 | `v2/facts.json` | what the frontend reads besides the drawing: the views, no transition |
 
-The font is the frontend's own (`:/Rubik-Regular.ttf`): the theme ships no file but its JSON.
+Options (the frontend's theme settings): **Finish** `flat` (black), `frame` (black in a brushed
+metal frame, metal pill), `metal` (spun aluminium background, metal pill); **Text colour** white,
+black, red, yellow, green, cyan, magenta.
+
+The font is the frontend's own (`:/Rubik-Regular.ttf`): the theme ships its JSON and ~70 KB of textures.
 
 Pictures (from a REG-Station checkout): `tools/textui/shot.sh TextUI 320x240 <dir> "shot=system,ok,wait 300,shot=games"`.
