@@ -28,3 +28,7 @@ black, red, yellow, green, cyan, magenta.
 The font is the frontend's own (`:/Rubik-Regular.ttf`): the theme ships its JSON and ~70 KB of textures.
 
 Pictures (from a REG-Station checkout): `tools/textui/shot.sh TextUI 320x240 <dir> "shot=system,ok,wait 300,shot=games"`.
+
+## Licence
+
+Copyright (c) 2026 REG-Linux Project. Everything here (theme files and the generated art in `v2/art/`) is licensed under [CC BY-NC-SA 4.0](LICENSE), like most EmulationStation-family themes.
